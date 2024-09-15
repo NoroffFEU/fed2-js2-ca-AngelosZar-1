@@ -8,9 +8,9 @@ const getUserInput = () => {
   return { email: userInputEmail, password: userInputPassword };
 };
 
-export async function login({ email, password }) {
+export async function login({ email, password }, apiUrl) {
   try {
-    const response = fetch(API_AUTH_LOGIN, {
+    const response = fetch(apiUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -33,10 +33,31 @@ export async function login({ email, password }) {
   }
 }
 
+// const loginForm = document.querySelector('#login-form');
+
+// loginForm.addEventListener('submit', async event => {
+//   event.preventDefault();
+//   const userInput = getUserInput();
+//   await login(userInput, API_AUTH_LOGIN);
+//   window.location.href = '/profile/index.html';
+// });
+
 const loginForm = document.querySelector('#login-form');
-loginForm.addEventListener('submit', async event => {
-  event.preventDefault();
-  const userInput = getUserInput();
-  login(userInput);
-});
+//
 console.log(loginForm);
+//
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('DOM fully loaded and parsed');
+  if (loginForm) {
+    loginForm.addEventListener('submit', async event => {
+      event.preventDefault();
+      const userInput = getUserInput();
+      await login(userInput, API_AUTH_LOGIN);
+      // refactor this to use router
+      // window.location.href = '/profile/index.html';
+    });
+    console.log(loginForm);
+  } else {
+    console.log('No login form found');
+  }
+});
