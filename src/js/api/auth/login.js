@@ -1,4 +1,13 @@
 import { API_AUTH_LOGIN } from '../constants';
+
+const getUserInput = () => {
+  const userInputEmail = document.querySelector('#email').value;
+  const userInputPassword = document.querySelector('#password').value;
+  console.log('userInputEmail:', userInputEmail);
+  console.log('userInputPassword :', userInputPassword);
+  return { email: userInputEmail, password: userInputPassword };
+};
+
 export async function login({ email, password }) {
   try {
     const response = fetch(API_AUTH_LOGIN, {
@@ -24,14 +33,10 @@ export async function login({ email, password }) {
   }
 }
 
-const data = {
-  name: 'angZar',
-  email: 'first.last@stud.noroff.no',
-  password: 'UzI1NiIsInR5cCI',
-};
-const data1 = {
-  email: 'angzar49347@stud.noroff.no',
-  password: '/.,offThe12qw3p09/',
-};
-
-login(data1);
+const loginForm = document.querySelector('#login-form');
+loginForm.addEventListener('submit', async event => {
+  event.preventDefault();
+  const userInput = getUserInput();
+  login(userInput);
+});
+console.log(loginForm);
